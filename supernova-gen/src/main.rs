@@ -6,7 +6,6 @@ use std::{
     path::{Path, PathBuf},
 };
 
-use bincode;
 use base64::engine::general_purpose::STANDARD as B64;
 use base64::Engine as _;
 
@@ -24,7 +23,6 @@ use nova_snark::{
 };
 
 use ff::{PrimeField, Field};
-use hex;
 
 // ---------------- JSON schemas ----------------
 #[derive(Serialize)]
@@ -92,7 +90,7 @@ fn build_and_prove_supernova(num_steps: usize) -> Result<(VkJson, ProofJson, Vec
     type E2 = VestaEngine;
     type F1 = <E1 as Engine>::Scalar;
 
-    let c = FibStep::default();
+    let c = FibStep;
 
     // hint untuk masing-masing engine: E1 (Pallas) dulu, lalu E2 (Vesta)
     let ck1 = default_ck_hint::<E1>();
