@@ -58,5 +58,6 @@ fn main() -> Result<()> {
     }
 
     println!("Verification result: {ok}");
+    if !ok { std::process::exit(1); }
     Ok(())
 }
