@@ -52,11 +52,11 @@ fn main() -> Result<()> {
 
     // 5) Cek optional: cocokan public input yang dikirim (hex) dengan z_final[1]
     let mut ok = true;
-    if let Some(want_hex) = inputs.get(0) {
+    if let Some(want_hex) = inputs.first() {
         let got_hex = f_to_hex(z_final[1]);
         ok = &got_hex == want_hex;
     }
 
-    println!("Verification result: {}", ok);
+    println!("Verification result: {ok}");
     Ok(())
 }
