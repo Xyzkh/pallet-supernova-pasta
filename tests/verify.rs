@@ -1,4 +1,3 @@
-use assert_cmd::prelude::*;
 use predicates::prelude::*;
 use std::{fs, path::Path};
 
@@ -11,7 +10,7 @@ fn verify_frozen_fixtures_pass() {
     }
 
     let mut cmd = assert_cmd::Command::cargo_bin("verifier-supernova").unwrap();
-    cmd.args(&[
+    cmd.args([
         &format!("{dir}/proof.json"),
         &format!("{dir}/vk.json"),
         &format!("{dir}/inputs.json"),
@@ -34,7 +33,7 @@ fn verify_corrupted_proof_fails() {
     fs::write(&tmp, &data).expect("write tmp");
 
     let mut cmd = assert_cmd::Command::cargo_bin("verifier-supernova").unwrap();
-    cmd.args(&[&tmp, &format!("{dir}/vk.json"), &format!("{dir}/inputs.json")]);
+    cmd.args([&tmp, &format!("{dir}/vk.json"), &format!("{dir}/inputs.json")]);
     cmd.assert().failure(); // harus exit code non-zero
 
     let _ = fs::remove_file(&tmp);
