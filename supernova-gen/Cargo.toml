@@ -1,0 +1,31 @@
+[package]
+name = "supernova-gen"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+base64 = "0.22"
+bincode = "1"
+
+# Nova/SuperNova
+nova-snark = "0.41"
+
+# Bellpepper untuk circuit (dipakai oleh nova-snark)
+bellpepper-core = "0.4"
+
+# Util tambahan yang dipakai di kode
+hex = "0.4"
+ff = "0.13"
+
+# Arkworks (std OK untuk tool generator)
+ark-ff = { version = "0.4", features = ["std"] }
+ark-ec = { version = "0.4", features = ["std"] }
+ark-serialize = "0.4"
+ark-std = { version = "0.4", features = ["std"] }
+
+# Pasta cycle
+ark-pallas = { version = "0.4", features = ["std"] }
+ark-vesta  = { version = "0.4", features = ["std"] }
