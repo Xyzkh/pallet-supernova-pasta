@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-and-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache cargo
+        uses: Swatinem/rust-cache@v2
+        with:
+          save-if: ${{ github.ref == 'refs/heads/main' }}
+
+      - name: System deps
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Build workspace
+        run: cargo build --workspace --all-features
+
+      # Regenerasi proof real dengan generator kamu
+      - name: Generate SuperNova Pasta proof (release)
+        run: cargo run --manifest-path supernova-gen/Cargo.toml --release
+
+      # Verifikasi proof yang baru dibuat (harus "Verification result: true")
+      - name: Verify generated proof
+        run: |
+          cargo run -- supernova-gen/proof.json supernova-gen/vk.json supernova-gen/inputs.json | tee _out.txt
+          grep -q "Verification result: true" _out.txt
+
+      # (Opsional) Verifikasi fixtures beku jika ada
+      - name: Verify frozen fixtures (optional)
+        if: ${{ always() }}
+        run: |
+          if [ -f fixtures/pasta-fib-n10/proof.json ]; then
+            cargo run -- fixtures/pasta-fib-n10/proof.json fixtures/pasta-fib-n10/vk.json fixtures/pasta-fib-n10/inputs.json | tee _out2.txt
+            grep -q "Verification result: true" _out2.txt
+          fi
