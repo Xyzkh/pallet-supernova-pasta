@@ -1,0 +1,14 @@
+# Rust build
+/target/
+/supernova-gen/target/
+
+# IDE cache
+*.swp
+*.swo
+*.idea/
+.vscode/
+
+# Artefak generator di root (fixtures tetap disimpan!)
+/vk.json
+/proof.json
+/inputs.json
