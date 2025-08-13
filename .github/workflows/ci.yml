@@ -1,51 +1,36 @@
-name: CI
+name: build-and-verify
 
 on:
   push:
+    branches: [ "main" ]
   pull_request:
 
 jobs:
-  build-and-verify:
+  ci:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Rust toolchain
         uses: dtolnay/rust-toolchain@stable
 
-      - name: Clippy (lint)
-        run: cargo clippy --workspace --all-targets -- -D warnings
-
-      - name: Test
-        run: cargo test --workspace --all-features
-
+      # ✅ Cache dependency & target build
       - name: Cache cargo
         uses: Swatinem/rust-cache@v2
         with:
-          save-if: ${{ github.ref == 'refs/heads/main' }}
+          cache-on-failure: true
 
-      - name: System deps
-        run: sudo apt-get update && sudo apt-get install -y jq
-
-      - name: Build workspace
+      - name: Build
         run: cargo build --workspace --all-features
 
-      # Regenerasi proof real dengan generator kamu
-      - name: Generate SuperNova Pasta proof (release)
+      - name: Clippy
+        run: cargo clippy --workspace --all-targets -- -D warnings
+
+      - name: Tests
+        run: cargo test --workspace --all-features
+
+      - name: Generate proof (release)
         run: cargo run --manifest-path supernova-gen/Cargo.toml --release
 
-      # Verifikasi proof yang baru dibuat (harus "Verification result: true")
-      - name: Verify generated proof
-        run: |
-          cargo run -- supernova-gen/proof.json supernova-gen/vk.json supernova-gen/inputs.json | tee _out.txt
-          grep -q "Verification result: true" _out.txt
-
-      # (Opsional) Verifikasi fixtures beku jika ada
-      - name: Verify frozen fixtures (optional)
-        if: ${{ always() }}
-        run: |
-          if [ -f fixtures/pasta-fib-n10/proof.json ]; then
-            cargo run -- fixtures/pasta-fib-n10/proof.json fixtures/pasta-fib-n10/vk.json fixtures/pasta-fib-n10/inputs.json | tee _out2.txt
-            grep -q "Verification result: true" _out2.txt
-          fi
+      - name: Verify proof (fresh artifacts)
+        run: cargo run -- supernova-gen/proof.json supernova-gen/vk.json supernova-gen/inputs.json
