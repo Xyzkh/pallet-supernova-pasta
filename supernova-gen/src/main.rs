@@ -10,34 +10,30 @@ use base64::engine::general_purpose::STANDARD as B64;
 use base64::Engine as _;
 
 // === nova-snark frontend ===
-use nova_snark::frontend::{
-    num::AllocatedNum,
-    ConstraintSystem,
-    SynthesisError,
-};
+use nova_snark::frontend::{num::AllocatedNum, ConstraintSystem, SynthesisError};
 use nova_snark::{
     nova::{PublicParams, RecursiveSNARK},
     provider::{PallasEngine, VestaEngine},
-    traits::{circuit::StepCircuit, Engine},
     traits::snark::default_ck_hint,
+    traits::{circuit::StepCircuit, Engine},
 };
 
-use ff::{PrimeField, Field};
+use ff::{Field, PrimeField};
 
 // ---------------- JSON schemas ----------------
 #[derive(Serialize)]
 struct VkJson {
-    format: String,     // "supernova_v1"
-    curve: String,      // "pasta"
-    vk_b64: String,     // base64(bincode(PublicParams))
+    format: String, // "supernova_v1"
+    curve: String,  // "pasta"
+    vk_b64: String, // base64(bincode(PublicParams))
 }
 
 #[derive(Serialize)]
 struct ProofJson {
-    format: String,     // "supernova_v1"
-    curve: String,      // "pasta"
-    num_steps: u64,     // jumlah langkah folding
-    proof_b64: String,  // base64(bincode(RecursiveSNARK))
+    format: String,    // "supernova_v1"
+    curve: String,     // "pasta"
+    num_steps: u64,    // jumlah langkah folding
+    proof_b64: String, // base64(bincode(RecursiveSNARK))
 }
 
 // inputs.json = Vec<String> (top-level array)
@@ -53,7 +49,9 @@ fn f_to_hex<F: PrimeField>(x: F) -> String {
 struct FibStep;
 
 impl<F: PrimeField> StepCircuit<F> for FibStep {
-    fn arity(&self) -> usize { 2 }
+    fn arity(&self) -> usize {
+        2
+    }
 
     fn synthesize<CS: ConstraintSystem<F>>(
         &self,
@@ -75,8 +73,8 @@ impl<F: PrimeField> StepCircuit<F> for FibStep {
         cs.enforce(
             || "z0 + z1 = sum",
             |lc| lc + z0.get_variable() + z1.get_variable(), // A = z0 + z1
-            |lc| lc + CS::one(),                              // B = 1
-            |lc| lc + sum.get_variable(),                     // C = sum
+            |lc| lc + CS::one(),                             // B = 1
+            |lc| lc + sum.get_variable(),                    // C = sum
         );
 
         // next state: [z1, sum]

@@ -9,15 +9,15 @@ use base64::Engine as _;
 // ==== Schema file JSON ====
 #[derive(Deserialize)]
 pub struct VkFile {
-    pub format: String,   // "supernova_v1"
-    pub curve: String,    // "pasta"
-    pub vk_b64: String,   // base64(bincode(PublicParams))
+    pub format: String, // "supernova_v1"
+    pub curve: String,  // "pasta"
+    pub vk_b64: String, // base64(bincode(PublicParams))
 }
 
 #[derive(Deserialize)]
 pub struct ProofFile {
-    pub format: String,   // "supernova_v1"
-    pub curve: String,    // "pasta"
+    pub format: String, // "supernova_v1"
+    pub curve: String,  // "pasta"
     pub num_steps: u64,
     pub proof_b64: String, // base64(bincode(RecursiveSNARK))
 }
@@ -52,7 +52,9 @@ use nova_snark::traits::circuit::StepCircuit;
 pub struct FibStep;
 
 impl<F: PrimeField> StepCircuit<F> for FibStep {
-    fn arity(&self) -> usize { 2 }
+    fn arity(&self) -> usize {
+        2
+    }
 
     fn synthesize<CS: ConstraintSystem<F>>(
         &self,
