@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-22.04      # ✅ pin runner biar stabil
     timeout-minutes: 30        # (opsional) fail cepat jika runner stuck
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Rust toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
