@@ -28,7 +28,7 @@ ark-ec = { version = "0.4", features = ["std"] }
 ark-serialize = "0.4"
 ark-std = { version = "0.4", features = ["std"] }
 ark-pallas = { version = "0.4", features = ["std"] }
-ark-vesta  = { version = "0.4", features = ["std"] }
+ark-vesta  = { version = "0.5", features = ["std"] }
 
 [dev-dependencies]
 assert_cmd = "2"
