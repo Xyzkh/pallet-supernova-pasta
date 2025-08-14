@@ -1,35 +1,46 @@
-[name: build-and-verify
+name: build-and-verify
+
 on:
   push:
     branches: [ "main" ]
   pull_request:
     types: [opened, synchronize, reopened]
+
+# Batalkan run sebelumnya di branch/tag yang sama (biar tidak numpuk antrian)
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
 jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Rust toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
           components: clippy,rustfmt
+
       - name: Cache cargo
         uses: Swatinem/rust-cache@v2
         with:
           cache-on-failure: true
+
       - name: Build
         run: cargo build --workspace --all-features
+
       - name: Clippy
         run: cargo clippy --workspace --all-targets -- -D warnings
+
       - name: Format (rustfmt)
         run: cargo fmt --all -- --check
+
       - name: Tests
         run: cargo test --workspace --all-features
+
       - name: Generate proof (release)
         run: cargo run --manifest-path supernova-gen/Cargo.toml --release
+
       - name: Verify proof (fresh artifacts)
         run: cargo run -- supernova-gen/proof.json supernova-gen/vk.json supernova-gen/inputs.json
-YML
