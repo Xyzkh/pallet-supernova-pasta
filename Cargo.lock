@@ -54,8 +54,8 @@ checksum = "defd9a439d56ac24968cca0571f598a61bc8c55f71d50a89cda591cb750670ba"
 dependencies = [
  "ark-ff",
  "ark-poly",
- "ark-serialize",
- "ark-std",
+ "ark-serialize 0.4.2",
+ "ark-std 0.4.0",
  "derivative",
  "hashbrown",
  "itertools 0.10.5",
@@ -71,8 +71,8 @@ checksum = "ec847af850f44ad29048935519032c33da8aa03340876d351dfab5660d2966ba"
 dependencies = [
  "ark-ff-asm",
  "ark-ff-macros",
- "ark-serialize",
- "ark-std",
+ "ark-serialize 0.4.2",
+ "ark-std 0.4.0",
  "derivative",
  "digest",
  "itertools 0.10.5",
@@ -114,7 +114,7 @@ checksum = "760ecac12a00211188c9101b63bd284b80da5abcc5d97d9d2b3803bca1f63a52"
 dependencies = [
  "ark-ec",
  "ark-ff",
- "ark-std",
+ "ark-std 0.4.0",
 ]
 
 [[package]]
@@ -124,8 +124,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d320bfc44ee185d899ccbadfa8bc31aab923ce1558716e1997a1e74057fe86bf"
 dependencies = [
  "ark-ff",
- "ark-serialize",
- "ark-std",
+ "ark-serialize 0.4.2",
+ "ark-std 0.4.0",
  "derivative",
  "hashbrown",
 ]
@@ -137,7 +137,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "adb7b85a02b83d2f22f89bd5cac66c9c89474240cb6207cb1efc16d098e822a5"
 dependencies = [
  "ark-serialize-derive",
- "ark-std",
+ "ark-std 0.4.0",
+ "digest",
+ "num-bigint 0.4.6",
+]
+
+[[package]]
+name = "ark-serialize"
+version = "0.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3f4d068aaf107ebcd7dfb52bc748f8030e0fc930ac8e360146ca54c1203088f7"
+dependencies = [
+ "ark-std 0.5.0",
+ "arrayvec",
  "digest",
  "num-bigint 0.4.6",
 ]
@@ -164,6 +176,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "ark-std"
+version = "0.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "246a225cc6131e9ee4f24619af0f19d67761fff15d7ccc22e42b80846e69449a"
+dependencies = [
+ "num-traits",
+ "rand",
+]
+
+[[package]]
 name = "ark-vesta"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -172,7 +194,7 @@ dependencies = [
  "ark-ec",
  "ark-ff",
  "ark-pallas",
- "ark-std",
+ "ark-std 0.4.0",
 ]
 
 [[package]]
@@ -962,8 +984,8 @@ dependencies = [
  "ark-ec",
  "ark-ff",
  "ark-pallas",
- "ark-serialize",
- "ark-std",
+ "ark-serialize 0.5.0",
+ "ark-std 0.4.0",
  "ark-vesta",
  "base64",
  "bellpepper-core",
@@ -1079,8 +1101,8 @@ dependencies = [
  "ark-ec",
  "ark-ff",
  "ark-pallas",
- "ark-serialize",
- "ark-std",
+ "ark-serialize 0.5.0",
+ "ark-std 0.4.0",
  "ark-vesta",
  "assert_cmd",
  "base64",
