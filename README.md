@@ -22,3 +22,4 @@ This repo contains:
 │  └─ pasta-fib-n10/        # real example (num_steps=10) + METADATA.md + hashes
 └─ .github/workflows/ci.yml # CI pipeline
 <bp-check 2025-08-14T12:11:31+07:00>
+<bp-check-2 2025-08-15T11:04:23+07:00>
