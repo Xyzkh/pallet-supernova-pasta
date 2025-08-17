@@ -21,3 +21,5 @@ This repo contains:
 ├─ fixtures/
 │  └─ pasta-fib-n10/        # real example (num_steps=10) + METADATA.md + hashes
 └─ .github/workflows/ci.yml # CI pipeline
+
+> Quickstart & binaries: see **Release v0.1.0** for assets & how to use.
